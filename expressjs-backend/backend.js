@@ -28,6 +28,16 @@ const users = {
         id: 'zap555', 
         name: 'Dennis',
         job: 'Bartender',
+     },
+     {
+      id: 'zap555', 
+      name: 'Dennis',
+      job: 'Bartender',
+     },
+     {
+      id: 'zap555', 
+      name: 'Dennis',
+      job: 'Bartender',
      }
   ]
 }
@@ -60,6 +70,24 @@ app.get('/users/:id', (req, res) => {
       res.send(result);
   }
 });
+
+app.get('/users/:name/:job', (req, res) => {
+  const name = req.params['name'];
+  const job = req.params['job'];
+  if (name != undefined){
+      let result = findUserByName(name);
+      result = findUserByJob(job);
+      // result = {users_list: result};
+      res.send(result);
+  }
+  else{
+      res.send(users);
+  }
+});
+
+const findUserByJob = (job) => { 
+  return users['users_list'].filter( (user) => user['job'] === job); 
+}
 
 app.delete('/users/:id', (req, res) => {
   const id = req.params['id']; //or req.params.id
