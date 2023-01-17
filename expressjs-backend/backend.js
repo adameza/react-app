@@ -25,12 +25,12 @@ const users = {
         job: 'Aspring actress',
      },
      {
-        id: 'zap555', 
+        id: 'zap111', 
         name: 'Dennis',
         job: 'Bartender',
      },
      {
-      id: 'zap555', 
+      id: 'zap111', 
       name: 'Dennis',
       job: 'Bartender',
      },
@@ -85,10 +85,6 @@ app.get('/users/:name/:job', (req, res) => {
   }
 });
 
-const findUserByJob = (job) => { 
-  return users['users_list'].filter( (user) => user['job'] === job); 
-}
-
 app.delete('/users/:id', (req, res) => {
   const id = req.params['id']; //or req.params.id
   let result = findUserById(id);
@@ -100,30 +96,36 @@ app.delete('/users/:id', (req, res) => {
   }
 });
 
-function delUser(user){
-  const id = users['users_list'].indexOf(user)
-  if (id > -1) {
-    users['users_list'].splice(id, 1);
-  }
-}
-
 app.post('/users', (req, res) => {
   const userToAdd = req.body;
   addUser(userToAdd);
   res.status(200).end();
 });
 
+function delUser(found_users){
+  found_users.forEach((obj, i) => {
+    const index = users['users_list'].indexOf(obj)
+    if (index > -1) {
+      users['users_list'].splice(index, 1);
+    }
+  });
+}
+
 function addUser(user){
   users['users_list'].push(user);
 }
 
 function findUserById(id) {
-  return users['users_list'].find( (user) => user['id'] === id); // or line below
+  return users['users_list'].filter( (user) => user['id'] === id); // or line below
   //return users['users_list'].filter( (user) => user['id'] === id);
 }
 
 const findUserByName = (name) => { 
   return users['users_list'].filter( (user) => user['name'] === name); 
+}
+
+const findUserByJob = (job) => { 
+  return users['users_list'].filter( (user) => user['job'] === job); 
 }
 
 app.listen(port, () => {
