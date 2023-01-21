@@ -99,9 +99,10 @@ app.delete('/users/:id', (req, res) => {
 });
 
 app.post('/users', (req, res) => {
-  const userToAdd = req.body;
+  var userToAdd = req.body;
+  userToAdd = assignID(userToAdd)
   addUser(userToAdd);
-  res.status(200).end();
+  res.status(201).send(userToAdd);
 });
 
 function delUser(found_users){
@@ -111,6 +112,12 @@ function delUser(found_users){
       users['users_list'].splice(index, 1);
     }
   });
+}
+
+function assignID(user) {
+  var rand_id = (Math.random() + 1).toString(36).substring(7);
+  user.id = rand_id
+  return user
 }
 
 function addUser(user){
