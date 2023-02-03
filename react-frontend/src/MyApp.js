@@ -40,7 +40,7 @@ function MyApp() {
 
   async function makeDeleteCall(person){
     try {
-        var url = 'http://localhost:5000/users/'.concat(person.id)
+        var url = 'http://localhost:5000/users/'.concat(person._id)
         const response = await axios.delete(url);
         return response;
     }
